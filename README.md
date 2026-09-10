@@ -22,14 +22,14 @@ AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 | 查看维度 | 项目内容 |
 |---|---|
 | 关注问题 | 如何选择值得生产的数据，以及如何避免总体分数掩盖能力退化 |
-| 实际产物 | 240 条原创评测样本、108 条增强数据、逐样本结果与可交互 Dashboard |
-| 展示能力 | 数据策略、指标设计、失败分析、实验复现与产品决策 |
-| 技术栈 | Python · Pillow · Streamlit · pytest · GitHub Actions |
-| 验证边界 | 离线确定性参考规则；未进行真实 VLM 训练或真机实验 |
+| 实际产物 | 保留 240 条规则样本与 108 条历史增强；新增 72 道真实 VLM 评测题、144 次生成及 6 条开发集增强 |
+| 展示能力 | 图像输入隔离、场景族切分、配对实验、失败分母、开发集挖掘与数据血缘 |
+| 技术栈 | Python · PyTorch · Transformers · Pillow · Streamlit · pytest · GitHub Actions |
+| 验证边界 | 真实 SmolVLM CPU 推理 + 独立规则历史；无模型训练、真机实验或训练收益 |
 
-**从这里开始：** [中文介绍与启动](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/README.zh-CN.md) · [实际实验报告](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/EXPERIMENT_REPORT.md) · [数据策略](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/DATA_STRATEGY.md) · [核心代码](https://github.com/kimzclandi/vlm-data-flywheel-lab/tree/main/src/flywheel) · [CI 状态](https://github.com/kimzclandi/vlm-data-flywheel-lab/actions)
+**从这里开始：** [中文介绍与启动](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/README.zh-CN.md) · [实际实验报告](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/REAL_VLM_EXPERIMENT.md) · [数据策略](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/DATA_STRATEGY.md) · [核心代码](https://github.com/kimzclandi/vlm-data-flywheel-lab/tree/main/src/flywheel) · [CI 状态](https://github.com/kimzclandi/vlm-data-flywheel-lab/actions)
 
-> 这个项目演示了一个关键判断：候选版本的总体准确率提高，仍可能因计数能力退化而被拒绝。当前结果证明的是评测与决策流程，不是模型学习收益。
+> 真实 VLM 保留集基础/观察提示均为 61.1%，未支持改进假设；开发集多数答案先验也达到 61.1%，因此不声称视觉 grounding 收益。历史规则候选总体提高但计数退化，被 REJECT；这些都不是训练收益。
 
 <a id="autonomous-driving"></a>
 ## 02 · 自动驾驶
