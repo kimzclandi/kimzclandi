@@ -34,9 +34,24 @@ AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 <a id="autonomous-driving"></a>
 ## 02 · 自动驾驶
 
-**目前暂无该分类的公开项目。**
+### [Driving Data Engine · 道路长尾数据闭环](https://github.com/kimzclandi/driving-data-engine)
 
-后续项目可围绕感知与融合、定位、规划控制、场景评测组织；这些是分类范围，不代表已经完成的工作。
+在固定数据预算下比较采样策略，用真实检测头训练和可恢复的数据流程检验结果。
+
+`真实道路图像 → 质量检查 → 模型推理 → 样本筛选 → 实际微调 → 切片评测与回归`
+
+| 查看维度 | 项目内容 |
+|---|---|
+| 关注问题 | 哪些道路图像值得进入训练，怎样区分数据收益与额外训练的影响 |
+| 实际产物 | 240 张 BDD100K 图像实验；三策略 × 三随机种子；三组匹配训练步数消融 |
+| 真实 VLM | SmolVLM 昼夜标签实验，比较自由生成与有限标签解码，保留格式错误和语义分歧 |
+| 数据工程 | 来源与版本追踪、Parquet/DuckDB、SQLite 幂等恢复、单机 Ray Data 一致性与吞吐实验 |
+| 技术栈 | Python · PyTorch · Transformers · Ray Data · DuckDB · Streamlit · pytest · GitHub Actions |
+| 验证边界 | 仅微调检测器 ROI 预测头；公开数据小规模实验；未证明显著策略收益、人工降本或 PB 级处理能力 |
+
+**从这里开始：** [启动与结果](https://github.com/kimzclandi/driving-data-engine#readme) · [实际实验报告](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/EXPERIMENT_REPORT.md) · [VLM 质检](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/VLM_QUALITY.md) · [岗位能力与证据](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/JD_EVIDENCE.md) · [CI 状态](https://github.com/kimzclandi/driving-data-engine/actions)
+
+> 项目保留了不支持预期的结果：不确定性采样未稳定优于随机组，小规模 Ray 扫描慢于串行；VLM 输出格式合法也不保证语义正确。每项结论均有配置和原始报告可核查。
 
 <a id="robotics"></a>
 ## 03 · 机器人与具身智能
