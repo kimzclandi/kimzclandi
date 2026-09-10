@@ -22,14 +22,14 @@ AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 | 查看维度 | 项目内容 |
 |---|---|
 | 关注问题 | 如何选择值得生产的数据，以及如何避免总体分数掩盖能力退化 |
-| 实际产物 | 保留 240 条规则样本与 108 条历史增强；新增 72 道真实 VLM 评测题、144 次生成及 6 条开发集增强 |
+| 实际产物 | 保留 240 条规则样本与 108 条历史增强；保留第一轮72题/144次生成；新增90题/30场景族、270次真实/空白/错配干预 |
 | 展示能力 | 图像输入隔离、场景族切分、配对实验、失败分母、开发集挖掘与数据血缘 |
 | 技术栈 | Python · PyTorch · Transformers · Pillow · Streamlit · pytest · GitHub Actions |
 | 验证边界 | 真实 SmolVLM CPU 推理 + 独立规则历史；无模型训练、真机实验或训练收益 |
 
-**从这里开始：** [中文介绍与启动](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/README.zh-CN.md) · [实际实验报告](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/REAL_VLM_EXPERIMENT.md) · [数据策略](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/DATA_STRATEGY.md) · [核心代码](https://github.com/kimzclandi/vlm-data-flywheel-lab/tree/main/src/flywheel) · [CI 状态](https://github.com/kimzclandi/vlm-data-flywheel-lab/actions)
+**从这里开始：** [中文介绍与启动](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/README.zh-CN.md) · [实际实验报告](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/GROUNDING_V3_REPORT.md) · [数据策略](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/DATA_STRATEGY.md) · [核心代码](https://github.com/kimzclandi/vlm-data-flywheel-lab/tree/main/src/flywheel) · [CI 状态](https://github.com/kimzclandi/vlm-data-flywheel-lab/actions)
 
-> 真实 VLM 保留集基础/观察提示均为 61.1%，未支持改进假设；开发集多数答案先验也达到 61.1%，因此不声称视觉 grounding 收益。历史规则候选总体提高但计数退化，被 REJECT；这些都不是训练收益。
+> 第一轮真实 VLM 提示比较未超过先验；新平衡实验的保留集任务宏平均为真实54.7%、空白40.0%、错配25.3%，有限视觉贡献主要来自空间题，不外推通用推理。历史规则候选总体提高但计数退化，被 REJECT；这些都不是训练收益。
 
 <a id="autonomous-driving"></a>
 ## 02 · 自动驾驶
@@ -43,13 +43,13 @@ AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 | 查看维度 | 项目内容 |
 |---|---|
 | 关注问题 | 哪些道路图像值得进入训练，怎样区分数据收益与额外训练的影响 |
-| 实际产物 | 240 张 BDD100K 图像实验；三策略 × 三随机种子；三组匹配训练步数消融 |
+| 实际产物 | 保留240图旧实验；新增120张评测图，定向/随机/seed-only × 三seed，统一112步 |
 | 真实 VLM | SmolVLM 昼夜标签实验，比较自由生成与有限标签解码，保留格式错误和语义分歧 |
 | 数据工程 | 来源与版本追踪、Parquet/DuckDB、SQLite 幂等恢复、单机 Ray Data 一致性与吞吐实验 |
 | 技术栈 | Python · PyTorch · Transformers · Ray Data · DuckDB · Streamlit · pytest · GitHub Actions |
-| 验证边界 | 仅微调检测器 ROI 预测头；公开数据小规模实验；未证明显著策略收益、人工降本或 PB 级处理能力 |
+| 验证边界 | 仅微调检测器 ROI 预测头；公开数据小规模实验；新实验定向−随机为−0.634 AP点，区间跨零；无人工降本或PB级处理证据 |
 
-**从这里开始：** [启动与结果](https://github.com/kimzclandi/driving-data-engine#readme) · [实际实验报告](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/EXPERIMENT_REPORT.md) · [VLM 质检](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/VLM_QUALITY.md) · [岗位能力与证据](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/JD_EVIDENCE.md) · [CI 状态](https://github.com/kimzclandi/driving-data-engine/actions)
+**从这里开始：** [启动与结果](https://github.com/kimzclandi/driving-data-engine#readme) · [实际实验报告](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/FAILURE_V2_REPORT.md) · [VLM 质检](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/VLM_QUALITY.md) · [岗位能力与证据](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/CAPABILITY_EVIDENCE_V2.md) · [CI 状态](https://github.com/kimzclandi/driving-data-engine/actions)
 
 > 项目保留了不支持预期的结果：不确定性采样未稳定优于随机组，小规模 Ray 扫描慢于串行；VLM 输出格式合法也不保证语义正确。每项结论均有配置和原始报告可核查。
 
