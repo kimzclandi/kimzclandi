@@ -4,7 +4,7 @@
 
 AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 
-这里按方向整理我的公开项目，方便查看代码、运行方法和实验依据。
+这里按方向整理我的公开项目，方便查看代码、运行方法和实验依据。核心链路是：识别失败 → 数据假设 → 固定预算策略 → 受控验证 → 依据证据继续或拒绝。代码由 AI 辅助完成；所有成果区分真实运行、合成控制与未验证边界。
 
 [AI 数据与评测](#ai-data) · [自动驾驶](#autonomous-driving) · [机器人与具身智能](#robotics) · [全部仓库](https://github.com/kimzclandi?tab=repositories)
 
@@ -51,7 +51,29 @@ AI Data & Evaluation · Autonomous Driving · Robotics & Embodied AI
 
 **从这里开始：** [启动与结果](https://github.com/kimzclandi/driving-data-engine#readme) · [实际实验报告](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/FAILURE_V2_REPORT.md) · [VLM 质检](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/VLM_QUALITY.md) · [岗位能力与证据](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/CAPABILITY_EVIDENCE_V2.md) · [CI 状态](https://github.com/kimzclandi/driving-data-engine/actions)
 
+[新增开发集机制诊断](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/DIAGNOSIS_V3_REPORT.md)：完整评分与低分质量项秩相关0.988，留组原型AUC0.395，不再追加缺乏依据的同类训练。
+
 > 项目保留了不支持预期的结果：不确定性采样未稳定优于随机组，小规模 Ray 扫描慢于串行；VLM 输出格式合法也不保证语义正确。每项结论均有配置和原始报告可核查。
+
+### [Road Video Miner · 视频场景挖掘](https://github.com/kimzclandi/road-video-miner)
+
+20个KITTI序列、120个不重叠片段、600帧真实CPU推理；按每序列相同两秒预算比较随机、均匀时间、外观去重和时序覆盖，使用参考漏检轨迹做序列级评价。
+
+- **新增能力：** 帧—片段—序列血缘，时间预算，序列隔离，参考失败覆盖与冗余分别评价。
+- **实际结论：** 时序相对随机+6.95个百分点，序列区间[−7.32,+20.89]，不支持稳定优势；没有下游模型训练。
+- **工程边界：** PNG序列而非视频容器解码；跨平台存在近同分选择差异，公开CI验证原始选择的贪心条件和指标回放，不声称位级相同选择。
+
+[实际报告](https://github.com/kimzclandi/road-video-miner/blob/main/docs/REPORT.md) · [复现与协议](https://github.com/kimzclandi/road-video-miner/blob/main/docs/PROTOCOL_AND_REPRODUCE.md) · [面试与核心函数](https://github.com/kimzclandi/road-video-miner/blob/main/docs/INTERVIEW.md) · [CI](https://github.com/kimzclandi/road-video-miner/actions)
+
+### [Detection Label Audit · 检测标签质量审计](https://github.com/kimzclandi/detection-label-audit)
+
+真实道路参考框与固定检测输出上的五类可控污染实验：漏标、类别错、框尺度错、重复与坐标管线错误；比较随机、几何规则和模型一致性，保留原始标签待复核队列。
+
+- **新增能力：** 问题候选与真值分离、固定复核预算、分类型召回、模型错误与标签错误的裁决边界。
+- **实际结论：** 12图预算下几何/组合方法均为100%合成污染命中率、20%总召回，仅覆盖易识别重复/坐标错误，未证明模型项增量收益。
+- **验证边界：** 100%不代表真实标签效果；86张原始图有线索但全部待人工复核。无新增神经推理、自动修复或训练收益。原区间计算被拒绝并保留，另有预算保持统计修复。
+
+[实际报告](https://github.com/kimzclandi/detection-label-audit/blob/main/docs/REPORT.md) · [复现](https://github.com/kimzclandi/detection-label-audit/blob/main/docs/REPRODUCE.md) · [岗位与面试](https://github.com/kimzclandi/detection-label-audit/blob/main/docs/INTERVIEW.md) · [CI](https://github.com/kimzclandi/detection-label-audit/actions)
 
 <a id="robotics"></a>
 ## 03 · 机器人与具身智能
