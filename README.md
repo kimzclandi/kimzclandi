@@ -4,6 +4,16 @@
 
 这里记录我在目标检测、视觉模型评测和数据选择上的个人实验。主项目是小样本检测数据选择，另外包含视觉输入干预、道路片段选择和标签复核三个专题。各仓库提供代码、运行说明、实验结果和限制；代码、测试与文档使用 AI 辅助开发。
 
+## 合作工程项目：AgentGate
+
+[AgentGate](https://github.com/kimzclandi/AgentGate) · 共同制作：[@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)
+
+Go 多租户 Agent 安全执行平台：文档与工单统一资源授权、受限委托、参数绑定人工审批、持久幂等与撤销，以及连接真实后端的管理控制台。提供 20 个顶层 Go 测试、race/vet 检查和 22 项固定 HTTP 验收证据；这些是确定性回归结果，不是真实模型通用成功率。
+
+默认 mock，数据库读写真实执行；可选模型和 OIDC 适配尚无外部凭证实测，不宣称生产 IAM 或通用代码沙箱。代码与文档使用 AI 辅助开发，个人分工不作虚构。
+
+[运行与架构](https://github.com/kimzclandi/AgentGate#readme) · [测试与性能报告](https://github.com/kimzclandi/AgentGate/blob/main/docs/TEST_REPORT.md) · [面试讲解](https://github.com/kimzclandi/AgentGate/blob/main/docs/INTERVIEW.md)
+
 ## 主项目：小样本目标检测数据选择
 
 [driving-data-engine](https://github.com/kimzclandi/driving-data-engine)
@@ -42,4 +52,4 @@
 
 ---
 
-这是四个个人研究项目的导航，不是额外技术项目。结果均受各自数据与实验设计限制，未声称生产部署或机器人实测成果。[全部仓库](https://github.com/kimzclandi?tab=repositories)
+这是个人研究项目与合作工程项目的导航，不是额外技术项目。结果均受各自数据与实验设计限制，未声称生产部署或机器人实测成果。[全部仓库](https://github.com/kimzclandi?tab=repositories)
