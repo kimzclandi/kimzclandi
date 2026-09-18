@@ -71,4 +71,4 @@ Python HTTP 协调器与独立 worker 进程完成文本数据分片处理，SQL
 
 ---
 
-这是个人研究项目与合作工程项目的导航，不是额外技术项目。各结果受数据规模与实验设计限制；公开项目不代替实习或生产系统经验。[全部仓库](https://github.com/kimzclandi?tab=repositories)
+这是个人研究项目与合作工程项目的导航，不是额外技术项目。各结果受数据规模与实验设计限制；各仓库的实验与部署范围以项目说明为准。[全部仓库](https://github.com/kimzclandi?tab=repositories)
