@@ -4,6 +4,8 @@
 
 围绕数据加工与质量、工程可靠性、视觉模型评测及评测驱动的数据迭代开展实验。以下仓库提供可运行代码、逐条结果与复现说明；代码、测试和文档使用 AI 辅助开发，具体贡献与上游归属见各项目。
 
+[项目状态与最小运行方式](docs/PROJECT_STATUS.md) · [全部公开仓库](https://github.com/kimzclandi?tab=repositories)
+
 ## 主要项目
 
 ### 1. Chinese Evidence Data Engine · 可追溯的中文数据加工
@@ -26,9 +28,9 @@
 
 ### 4. Domain QA Lab · 数据覆盖、训练与量化对照
 
-围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖、同框架量化与中文新来源验证。训练候选未通过采用门槛；Q8 在限定的英文开发集与中文样本中通过质量保持检查，不能据此推断业务可用。五轮逐条预测、拒答基线和失败案例可核验。
+围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖与同框架量化。新增参考标签质量对照完成9次训练：同题修正目标在96题留出集上将平均严格EM从17.36%提高到24.31%，差值区间为[+1.04,+13.54]个百分点；使用了参考标签，不是无标注筛选收益。自动核验器失败、历史训练候选未通过采用门槛，以及Q8的限定质量保持结果均保留；未作业务部署验证。
 
-[项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/REPRODUCE_CLOSURE.md) · [中文验证](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/chinese-v5/RESULTS.md)
+[项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/quality-study-20260920/RESULTS.md)
 
 ### 5. AI Data Shard Lab · 可恢复的数据分片处理
 
