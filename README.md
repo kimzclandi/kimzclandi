@@ -30,12 +30,17 @@
 
 [项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/REPRODUCE_CLOSURE.md) · [中文验证](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/chinese-v5/RESULTS.md)
 
+### 5. AI Data Shard Lab · 可恢复的数据分片处理
+
+将合成文本分片交给独立 HTTP worker，使用 SQLite 租约、递增 fencing token 与幂等提交处理重试和过期 worker。故障实验包含进程退出、协调器重启和提交确认丢失；确定性发布核对有效、重复与隔离记录的完整分母。范围是单机多进程，不代表多机生产系统或任务只执行一次。
+
+[项目与运行](https://github.com/kimzclandi/ai-data-shard-lab) · [架构与语义](https://github.com/kimzclandi/ai-data-shard-lab/blob/main/docs/ARCHITECTURE.md) · [故障实验](https://github.com/kimzclandi/ai-data-shard-lab/blob/main/docs/RESULTS.md)
+
 ## 工程补充与配套研究
 
 | 项目 | 独立问题与验证边界 |
 |---|---|
 | [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批、幂等与撤销；单实例、内置业务资源。共同作者 [@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)，外部集成与许可证状态见仓库。 |
-| [AI Data Shard Lab](https://github.com/kimzclandi/ai-data-shard-lab) | HTTP worker 的租约、fencing、幂等提交与进程故障恢复；单机合成文本实验。 |
 | [Road Video Miner](https://github.com/kimzclandi/road-video-miner) | 已解码 KITTI 图像序列的片段选择与冗余分析；简单特征、等时间预算，无下游训练。 |
 | [Detection Label Audit](https://github.com/kimzclandi/detection-label-audit) | 缓存检测预测上的合成污染排序与定位诊断；真实标签效用仍在研究中，59 图保留池未评分。 |
 
