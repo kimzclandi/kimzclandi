@@ -1,74 +1,44 @@
-# kimzclandi · AI 数据处理与模型评测
+# kimzclandi · 数据工程与模型评测
 
 [![CI](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
 
-这里记录 AI 数据处理、模型评测和数据选择实验。每个仓库提供输入、实现、运行命令、保存结果与限制。代码、测试和文档使用 AI 辅助开发；单机实验、模型推理、模型训练和生产部署分别说明。
+围绕数据加工与质量、工程可靠性、视觉模型评测及评测驱动的数据迭代开展实验。以下仓库提供可运行代码、逐条结果与复现说明；代码、测试和文档使用 AI 辅助开发，具体贡献与上游归属见各项目。
 
-## 从这里开始
+## 主要项目
 
-| 主题 | 仓库 | 可检查的内容 |
-|---|---|---|
-| 数据处理可靠性 | [ai-data-shard-lab](https://github.com/kimzclandi/ai-data-shard-lab) | HTTP 多进程 worker、租约、幂等提交、故障恢复和数据清单；单机合成数据 |
-| 模型评测 | [vlm-data-flywheel-lab](https://github.com/kimzclandi/vlm-data-flywheel-lab) | 270 次真实 SmolVLM 推理、视觉输入干预与切片评测；无训练 |
-| 数据选择 | [driving-data-engine](https://github.com/kimzclandi/driving-data-engine) | 固定预算、三种子与匹配训练步数的检测器预测头微调；保留负结果 |
+### 1. Chinese Evidence Data Engine · 可追溯的中文数据加工
 
-## 数据处理可靠性实验
+将公开中文文段转为可检查的数据资产：质量算子、Ray 任务、内容寻址缓存、原子快照与 SQLite 血缘，并用检索失败分析比较切块方法。保存了串行/Ray 一致性、故障恢复和逐题检索结果；重叠切块改善证据覆盖，同时增加索引与查询成本。当前为单机小语料实验，没有 Ray 加速证据。
 
-[ai-data-shard-lab](https://github.com/kimzclandi/ai-data-shard-lab) · 2026-09-18 开始
+[项目](https://github.com/kimzclandi/chinese-evidence-data-engine) · [运行](https://github.com/kimzclandi/chinese-evidence-data-engine/blob/main/docs/REPRODUCE.md) · [结果](https://github.com/kimzclandi/chinese-evidence-data-engine/blob/main/reports/RESULTS.md)
 
-Python HTTP 协调器与独立 worker 进程完成文本数据分片处理，SQLite 持久化租约、attempt token、提交结果和事件。实现过期重试、旧 token 拒绝、重复提交重放、异常数据隔离、精确去重和来源哈希清单。
+### 2. Driving Data Engine · 固定预算下的检测数据选择
 
-本地实验使用 1,200 行合成文本、24 个分片；单 worker、四 worker 和故障注入共 7 次运行生成相同 manifest。27 项测试通过。真实进程故障覆盖 worker 中断与协调器重启；**单机四 worker 没有观察到加速，不代表多机生产经验或模型收益**。
+在 BDD100K 小样本上比较随机与定向选样，仅微调预训练检测器的 ROI 预测头。提供三种子、匹配训练步数的对照、失败切片及排序机制诊断；当前未证明定向选择稳定优于随机。Ray 扩展仅在单机验证。
 
-[三分钟运行](https://github.com/kimzclandi/ai-data-shard-lab#readme) · [实验报告](https://github.com/kimzclandi/ai-data-shard-lab/blob/main/docs/RESULTS.md) · [架构](https://github.com/kimzclandi/ai-data-shard-lab/blob/main/docs/ARCHITECTURE.md) · [代码审查路径](https://github.com/kimzclandi/ai-data-shard-lab/blob/main/docs/REVIEW.md)
+[项目与运行](https://github.com/kimzclandi/driving-data-engine) · [训练对照](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/FAILURE_V2_REPORT.md) · [机制诊断](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/DIAGNOSIS_V3_REPORT.md)
 
-## 模型评测与视觉输入干预
+### 3. VLM Data Flywheel Lab · 视觉输入干预与失败分析
 
-[vlm-data-flywheel-lab](https://github.com/kimzclandi/vlm-data-flywheel-lab)
+固定 SmolVLM，对合成场景执行原图、空白图和错配图干预，保存 90 题 × 三种输入、共 270 次真实生成与配对切片结果。观察到的视觉贡献主要来自空间题；这是推理评测，没有模型训练收益。历史 metadata 规则演示与真实推理分开记录。
 
-固定 SmolVLM-256M，对合成图像执行原图、空白、错配输入下的真实推理。保留集三任务宏平均为 **54.7% / 40.0% / 25.3%**；全部45题准确率分别为 **44.4% / 33.3% / 22.2%**。视觉贡献主要来自空间题，未训练模型，不能外推通用 grounding 或真机能力。历史 metadata 规则演示单独保留。
+[项目](https://github.com/kimzclandi/vlm-data-flywheel-lab) · [运行](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/RUNNING.md) · [干预结果](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/GROUNDING_V3_REPORT.md)
 
-[中文介绍与运行](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/README.zh-CN.md) · [视觉干预报告](https://github.com/kimzclandi/vlm-data-flywheel-lab/blob/main/docs/GROUNDING_V3_REPORT.md)
+### 4. Domain QA Lab · 数据覆盖、训练与量化对照
 
-## 数据选择与训练对照
+围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖、同框架量化与中文新来源验证。训练候选未通过采用门槛；Q8 在限定的英文开发集与中文样本中通过质量保持检查，不能据此推断业务可用。五轮逐条预测、拒答基线和失败案例可核验。
 
-[driving-data-engine](https://github.com/kimzclandi/driving-data-engine)
+[项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/REPRODUCE_CLOSURE.md) · [中文验证](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/chinese-v5/RESULTS.md)
 
-在 BDD100K 小样本上比较选样方法，只微调预训练检测器的 ROI 预测头。最新三种子、等112步对照中，定向−随机为 **−0.634 AP 点**，区间 [−1.631, +0.323]，未证明稳定优势。后续开发集诊断分析排序为何缺少区分力；Ray 等扩展仅为单机实验。
+## 工程补充与配套研究
 
-[当前结果与运行](https://github.com/kimzclandi/driving-data-engine#readme) · [训练报告](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/FAILURE_V2_REPORT.md) · [机制诊断](https://github.com/kimzclandi/driving-data-engine/blob/main/docs/DIAGNOSIS_V3_REPORT.md)
+| 项目 | 独立问题与验证边界 |
+|---|---|
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批、幂等与撤销；单实例、内置业务资源。共同作者 [@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)，外部集成与许可证状态见仓库。 |
+| [AI Data Shard Lab](https://github.com/kimzclandi/ai-data-shard-lab) | HTTP worker 的租约、fencing、幂等提交与进程故障恢复；单机合成文本实验。 |
+| [Road Video Miner](https://github.com/kimzclandi/road-video-miner) | 已解码 KITTI 图像序列的片段选择与冗余分析；简单特征、等时间预算，无下游训练。 |
+| [Detection Label Audit](https://github.com/kimzclandi/detection-label-audit) | 缓存检测预测上的合成污染排序与定位诊断；真实标签效用仍在研究中，59 图保留池未评分。 |
 
-## 配套研究
+完整指标、负结果、数据许可与适用范围保留在各仓库。CI 的离线证据检查、实际推理与模型训练按项目分别说明。
 
-### 道路序列片段选择与冗余分析
-
-[road-video-miner](https://github.com/kimzclandi/road-video-miner)
-
-处理 KITTI PNG 序列，以相同片段时间预算比较均匀时间、外观去重和时序覆盖。时序相对随机的参考漏检轨迹覆盖差为 **+6.95 个百分点**，区间 [−7.32, +20.89]，未证明稳定优势；没有下游训练收益。跨平台回放验证历史选择及指标，不保证位级相同名单。
-
-[实验报告](https://github.com/kimzclandi/road-video-miner/blob/main/docs/REPORT.md) · [运行与边界](https://github.com/kimzclandi/road-video-miner/blob/main/docs/PROTOCOL_AND_REPRODUCE.md)
-
-### 检测标签复核排序与错误定位诊断
-
-[detection-label-audit](https://github.com/kimzclandi/detection-label-audit)
-
-复用上游检测预测，没有新增训练或推理。开发集合成污染的三次×8图预算中，原组合选中11次污染图、6次严格定位、3次定位证据达到最高分；guard对应 **17、12、7次**。两方法全范围可定位的16个(seed, image)集合相同，当前收益主要是排序清理。
-
-**70.83%是开发集合成污染的图级命中率，不是真实标签效果或定位准确率。** 旧40图只有探索性批量反馈；59图保留池未评分，仍缺少独立真实裁决。
-
-[定位诊断](https://github.com/kimzclandi/detection-label-audit/blob/main/docs/LOCALIZATION_V4.md) · [运行说明](https://github.com/kimzclandi/detection-label-audit/blob/main/docs/REPRODUCE.md)
-
-## AgentGate
-
-[AgentGate](https://github.com/kimzclandi/AgentGate) · 共同作者：[@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)
-
-基于 Go 的多租户 Agent 身份与工具执行平台，支持文档访问、工单处理、受限委托、资源授权、人工审批、幂等和权限撤销，配有运行管理与审计控制台。
-
-文档与工单使用 SQLite 持久化，提供确定性本地模式和可配置的模型接口。当前采用单实例、内置工具架构；外部模型与 OIDC 集成状态见项目文档。
-
-[快速开始](https://github.com/kimzclandi/AgentGate#readme) · [架构](https://github.com/kimzclandi/AgentGate/blob/main/docs/ARCHITECTURE.md) · [API](https://github.com/kimzclandi/AgentGate/blob/main/docs/API.md)
-
-
----
-
-这是个人研究项目与合作工程项目的导航，不是额外技术项目。各结果受数据规模与实验设计限制；各仓库的实验与部署范围以项目说明为准。[全部仓库](https://github.com/kimzclandi?tab=repositories)
+[全部公开仓库](https://github.com/kimzclandi?tab=repositories)

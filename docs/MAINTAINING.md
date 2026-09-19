@@ -2,10 +2,10 @@
 
 本仓库与用户名同名，根目录 README 显示在个人主页；它只做导航，不计为技术项目。
 
-展示顺序：driving-data-engine 为主项目，vlm-data-flywheel-lab 为第二专题，road-video-miner 与 detection-label-audit 为配套研究。更新介绍时保留仓库名称、URL 与 Git 历史。
+主要项目依次为 chinese-evidence-data-engine、driving-data-engine、vlm-data-flywheel-lab、domain-qa-lab，分别对应数据资产与可靠性、检测数据选择、视觉输入评测、训练与量化对照。AgentGate 为合作工程补充；ai-data-shard-lab、road-video-miner 与 detection-label-audit 为配套研究。更新介绍时保留仓库名称、URL 与 Git 历史。
 
 每个条目简要说明研究问题、实际实现、当前结果、运行入口与关键限制。指标旁写明数据范围和分母；历史规则、真实推理、预测缓存回放与训练分开说明。先核对对应仓库当前报告再更新主页，不能用旧摘要代替当前事实。
 
-保留真实的 AI 辅助说明。方法说明、实现索引和未实施的协作方案通过技术文档索引组织；明确区分已验证结果、设计建议和后续计划。
+保留真实的 AI 辅助说明与共同作者归属。方法说明和实现索引通过技术文档组织；明确区分已验证结果、设计建议和后续计划。
 
 发布前运行 `python scripts/verify_navigation.py`，检查匿名文档访问。推送后检查该提交的 Actions；徽标代替手写测试总数。不要加入本机路径、私人资料或密钥。
