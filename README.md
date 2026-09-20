@@ -35,20 +35,13 @@
 
 [项目](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · [运行](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/quality-study-20260920/RESULTS.md) · [外部评测](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EXTERNAL_DRCD.md)
 
-### 5. 基于租约的分片任务调度与故障恢复 · 可恢复的数据分片处理
-
-将合成文本分片交给独立 HTTP worker，使用 SQLite 租约、递增 fencing token 与幂等提交处理重试和过期 worker。故障实验包含进程退出、协调器重启和提交确认丢失；确定性发布核对有效、重复与隔离记录的完整分母。范围是单机多进程，不代表多机生产系统或任务只执行一次。
-
-[项目与运行](https://github.com/kimzclandi/LeaseBasedShardScheduling) · [架构与语义](https://github.com/kimzclandi/LeaseBasedShardScheduling/blob/main/docs/ARCHITECTURE.md) · [故障实验](https://github.com/kimzclandi/LeaseBasedShardScheduling/blob/main/docs/RESULTS.md)
-
-## 工程补充与配套研究
+## 工程补充与合作项目
 
 | 项目 | 独立问题与验证边界 |
 |---|---|
-| [意图分类中的教师筛选与知识蒸馏](https://github.com/kimzclandi/TeacherSelectionAndIntentDistillation) | 8类意图的教师一致性筛选、三种子响应蒸馏与FP16/Q8/Q4对照；筛选未优于随机、绝对准确率偏低。保存数值导出故障、有限性门禁与修正证据。 |
-| [AgentGate：工具调用授权与审批](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批、幂等与撤销；单实例、内置业务资源。共同作者 [@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)，外部集成与许可证状态见仓库。 |
-| [固定预算下的道路图像序列选择](https://github.com/kimzclandi/RoadSequenceSelectionUnderBudget) | 已解码 KITTI 图像序列的片段选择与冗余分析；简单特征、等时间预算，无下游训练。 |
-| [目标检测标签复核与错误定位](https://github.com/kimzclandi/DetectionLabelReviewAndLocalization) | 缓存检测预测上的合成污染排序与定位诊断；真实标签效用仍在研究中，59 图保留池未评分。 |
+| [基于租约的分片任务调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing token、幂等提交与主动故障实验；单机多进程，不代表多机生产系统或任务只执行一次。 |
+| [AgentGate：工具调用授权与审批](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批与撤销；单实例、内置业务资源。共同作者 @kimzclandi 与 @Lu-Ricardo-Y，集成与许可证状态见仓库。 |
+| [轴承振动故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | CWRU 物理频率特征、随机森林与 1D CNN 对照；按源文件与负载划分，未验证跨设备泛化，健康阈值存在较高误报。共同作者 @kimzclandi 与 @Lu-Ricardo-Y。 |
 
 完整指标、负结果、数据许可与适用范围保留在各仓库。CI 的离线证据检查、实际推理与模型训练按项目分别说明。
 

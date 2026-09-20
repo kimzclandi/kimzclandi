@@ -34,10 +34,8 @@ git remote set-url origin https://github.com/kimzclandi/kimzclandi.git
 | 视觉语言模型的图像依赖性评测 | [VLMImageDependenceEvaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) |
 | 小语言模型问答微调与量化实验 | [SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) |
 | 基于租约的分片任务调度与故障恢复 | [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling) |
-| 意图分类中的教师筛选与知识蒸馏 | [TeacherSelectionAndIntentDistillation](https://github.com/kimzclandi/TeacherSelectionAndIntentDistillation) |
-| 目标检测标签复核与错误定位 | [DetectionLabelReviewAndLocalization](https://github.com/kimzclandi/DetectionLabelReviewAndLocalization) |
-| 固定预算下的道路图像序列选择 | [RoadSequenceSelectionUnderBudget](https://github.com/kimzclandi/RoadSequenceSelectionUnderBudget) |
 | AgentGate：面向 Agent 工具调用的授权与审批 | [AgentGate](https://github.com/kimzclandi/AgentGate) |
+| 轴承振动故障诊断 | [bearing-fault-diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) |
 | kimzclandi｜数据工程与模型实验 | [kimzclandi](https://github.com/kimzclandi/kimzclandi) |
 
 [GitHub 仓库改名说明](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository)
