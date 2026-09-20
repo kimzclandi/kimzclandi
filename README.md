@@ -35,13 +35,11 @@
 
 [项目](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · [运行](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/quality-study-20260920/RESULTS.md) · [外部评测](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EXTERNAL_DRCD.md)
 
-## 工程补充与合作项目
+## 工程可靠性
 
 | 项目 | 独立问题与验证边界 |
 |---|---|
 | [基于租约的分片任务调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing token、幂等提交与主动故障实验；单机多进程，不代表多机生产系统或任务只执行一次。 |
-| [AgentGate：工具调用授权与审批](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批与撤销；单实例、内置业务资源。共同作者 @kimzclandi 与 @Lu-Ricardo-Y，集成与许可证状态见仓库。 |
-| [轴承振动故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | CWRU 物理频率特征、随机森林与 1D CNN 对照；按源文件与负载划分，未验证跨设备泛化，健康阈值存在较高误报。共同作者 @kimzclandi 与 @Lu-Ricardo-Y。 |
 
 完整指标、负结果、数据许可与适用范围保留在各仓库。CI 的离线证据检查、实际推理与模型训练按项目分别说明。
 
