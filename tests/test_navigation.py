@@ -20,3 +20,14 @@ class NavigationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);(root/'README.md').write_text('empty')
             with self.assertRaisesRegex(ValueError,'No public'):collect_targets(root)
+
+    def test_clone_url_resolves_to_repository_readme(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / 'README.md').write_text(
+                'git clone https://github.com/kimzclandi/kimzclandi.git\n'
+            )
+            self.assertEqual(
+                collect_targets(root),
+                {'https://raw.githubusercontent.com/kimzclandi/kimzclandi/main/README.md'},
+            )
