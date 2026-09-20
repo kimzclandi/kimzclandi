@@ -20,6 +20,7 @@ def collect_targets(root):
         for url in re.findall(r'https://github\.com/kimzclandi/[^\s)]+', content):
             parts = urlsplit(url).path.strip('/').split('/')
             if len(parts) == 2:
+                parts[1] = parts[1].removesuffix('.git')
                 urls.add(f'https://raw.githubusercontent.com/{parts[0]}/{parts[1]}/main/README.md')
             elif len(parts) > 4 and parts[2:4] == ['blob', 'main']:
                 urls.add('https://raw.githubusercontent.com/' + '/'.join(parts[:2]) + '/main/' + '/'.join(parts[4:]))
