@@ -1,5 +1,7 @@
 # kimzclandi｜数据工程与模型实验
 
+**简体中文** | [English](README.en.md)
+
 ![Project wordmark](.github/project-header.svg)
 
 [![CI](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
