@@ -11,8 +11,8 @@ class NavigationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);(root/'docs').mkdir()
             (root/'README.md').write_text('[status](docs/status.md)')
-            (root/'docs/status.md').write_text('[repo](https://github.com/kimzclandi/domain-qa-lab)')
-            self.assertEqual(collect_targets(root),{'https://raw.githubusercontent.com/kimzclandi/domain-qa-lab/main/README.md'})
+            (root/'docs/status.md').write_text('[repo](https://github.com/kimzclandi/extractive-qa)')
+            self.assertEqual(collect_targets(root),{'https://raw.githubusercontent.com/kimzclandi/extractive-qa/main/README.md'})
             (root/'docs/status.md').write_text('[missing](absent.md)')
             with self.assertRaisesRegex(ValueError,'Missing local'):collect_targets(root)
 
