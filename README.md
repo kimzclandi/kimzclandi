@@ -1,6 +1,9 @@
 # kimzclandi · 数据工程与模型评测
 
+![Project wordmark](.github/project-header.svg)
+
 [![CI](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
+[![Stars](https://img.shields.io/github/stars/kimzclandi/kimzclandi?style=flat)](https://github.com/kimzclandi/kimzclandi/stargazers) [License status](#license)
 
 围绕数据加工与质量、工程可靠性、视觉模型评测及评测驱动的数据迭代开展实验。以下仓库提供可运行代码、逐条结果与复现说明；代码、测试和文档使用 AI 辅助开发，具体贡献与上游归属见各项目。
 
@@ -50,3 +53,26 @@
 完整指标、负结果、数据许可与适用范围保留在各仓库。CI 的离线证据检查、实际推理与模型训练按项目分别说明。
 
 [全部公开仓库](https://github.com/kimzclandi?tab=repositories)
+
+## 维护与本地检查
+
+本仓库维护个人主页和项目导航，无需安装模型或业务服务。Python 3.10+：
+
+```sh
+git clone https://github.com/kimzclandi/kimzclandi.git
+cd kimzclandi
+python3 -m unittest discover -s tests -v
+python3 scripts/verify_navigation.py
+```
+
+导航检查需要网络，会读取关联仓库的公开页面。
+
+## Contributing / 参与贡献
+
+[贡献指南](CONTRIBUTING.md) · [行为准则](CODE_OF_CONDUCT.md) · [结构与维护](docs/MAINTAINING.md)
+
+[反馈问题](https://github.com/kimzclandi/kimzclandi/issues/new?template=bug_report.yml) · [建议功能](https://github.com/kimzclandi/kimzclandi/issues/new?template=feature_request.yml)
+
+## License
+
+本主页仓库尚未指定许可证。各链接项目的代码、数据和模型许可请以对应仓库为准。
