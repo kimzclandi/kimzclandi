@@ -28,9 +28,9 @@
 
 ### 4. Domain QA Lab · 数据覆盖、训练与量化对照
 
-围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖与同框架量化。新增参考标签质量对照完成9次训练：同题修正目标在96题留出集上将平均严格EM从17.36%提高到24.31%，差值区间为[+1.04,+13.54]个百分点；使用了参考标签，不是无标注筛选收益。自动核验器失败、历史训练候选未通过采用门槛，以及Q8的限定质量保持结果均保留；未作业务部署验证。
+围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖与同框架量化。新增参考标签质量对照完成9次训练：同题修正目标在96题留出集上将平均严格EM从17.36%提高到24.31%，差值区间为[+1.04,+13.54]个百分点；使用了参考标签，不是无标注筛选收益。新增DRCD外部96题评测中，两组平均EM均为57.29%，差值区间[-5.21,+4.86]个百分点，未复现上述正向主比较。自动核验器失败、历史训练候选未通过采用门槛，以及Q8的限定质量保持结果均保留；未作业务部署验证。
 
-[项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/quality-study-20260920/RESULTS.md)
+[项目](https://github.com/kimzclandi/domain-qa-lab) · [运行](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/domain-qa-lab/blob/main/reports/quality-study-20260920/RESULTS.md) · [外部评测](https://github.com/kimzclandi/domain-qa-lab/blob/main/docs/EXTERNAL_DRCD.md)
 
 ### 5. AI Data Shard Lab · 可恢复的数据分片处理
 
@@ -42,6 +42,7 @@
 
 | 项目 | 独立问题与验证边界 |
 |---|---|
+| [Distill Quant Intent Lab](https://github.com/kimzclandi/distill-quant-intent-lab) | 8类意图的教师一致性筛选、三种子响应蒸馏与FP16/Q8/Q4对照；筛选未优于随机、绝对准确率偏低。保存数值导出故障、有限性门禁与修正证据。 |
 | [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具执行、资源授权、人工审批、幂等与撤销；单实例、内置业务资源。共同作者 [@kimzclandi](https://github.com/kimzclandi) 与 [@Lu-Ricardo-Y](https://github.com/Lu-Ricardo-Y)，外部集成与许可证状态见仓库。 |
 | [Road Video Miner](https://github.com/kimzclandi/road-video-miner) | 已解码 KITTI 图像序列的片段选择与冗余分析；简单特征、等时间预算，无下游训练。 |
 | [Detection Label Audit](https://github.com/kimzclandi/detection-label-audit) | 缓存检测预测上的合成污染排序与定位诊断；真实标签效用仍在研究中，59 图保留池未评分。 |
