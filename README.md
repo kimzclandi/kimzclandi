@@ -1,4 +1,4 @@
-# kimzclandi｜模型推理、压缩与数据工程
+# kimzclandi
 
 **简体中文** | [English](README.en.md)
 

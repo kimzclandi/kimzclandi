@@ -1,4 +1,4 @@
-# kimzclandi | Model inference, compression and data engineering
+# kimzclandi
 
 [简体中文](README.md) | **English**
 
