@@ -62,7 +62,7 @@ A later fixed, same-run PreparedBM25 comparison measured approximately **1.86–
 
 | Project | Question and scope | Verify directly |
 |---|---|---|
-| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Course project: potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation using an upstream PPO implementation. | [Online interpretation (Chinese)](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/interpretation_zh.md) · [Full-archive reproduction](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
+| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Simulation project: potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation using an upstream PPO implementation. | [Online interpretation (Chinese)](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/interpretation_zh.md) · [Full-archive reproduction](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
 | [Bearing fault diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) | Collaborative project: CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction. | [Experiment report](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [Saved-evidence verification](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
 
 ## Contributions and reproduction
