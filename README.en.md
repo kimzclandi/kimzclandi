@@ -34,7 +34,7 @@ Quantization records separately report weight size, inference timing and per-que
 
 ## Supporting project
 
-### 03 · Chinese text processing and retrieval
+### 03 · Chinese Data Processing and Retrieval
 
 [ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · Ray / SQLite / BM25
 

@@ -17,7 +17,7 @@ Display titles describe the task; repository slugs remain stable. Use canonical 
 |---|---|---|
 | 大模型推理优化与性能分析 | Model inference optimization and performance analysis | [inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab) |
 | 小模型蒸馏与量化评测 | Small-model distillation and quantization evaluation | [SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) |
-| 中文数据处理与检索 | Chinese text processing and retrieval | [ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) |
+| 中文数据处理与检索 | Chinese Data Processing and Retrieval | [ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) |
 | 租约式分片调度与故障恢复 | Lease-based shard scheduling and recovery | [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling) |
 | AgentGate | AgentGate | [AgentGate](https://github.com/kimzclandi/AgentGate) |
 | 目标检测数据选择与训练对照 | Object-detection data selection and training controls | [ObjectDetectionDataSelection](https://github.com/kimzclandi/ObjectDetectionDataSelection) |
