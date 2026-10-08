@@ -44,16 +44,26 @@ A later fixed, same-run PreparedBM25 comparison measured approximately **1.86–
 
 [Run](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [Retrieval results and costs](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md) · [Query optimization](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/BM25_EXACT_OPTIMIZATION.md) · [Recovery and parity](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/EVIDENCE_MAP.md)
 
-## Other work
+## Systems and agent engineering
 
-| Project | Question and scope |
-|---|---|
-| [Lease-based shard scheduling and recovery](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup. |
-| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go tool authorization, parameter-bound approvals and audit; co-authored, single-instance prototype. |
-| [Object-detection data selection and training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection) | Small-sample BDD100K, ROI-head training; targeted selection did not consistently beat random. |
-| [VLM image-dependence evaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | Fixed SmolVLM, 90 questions × three visual interventions; inference evaluation without training gains. |
-| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation. |
-| [Bearing fault diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) | Vibration features, robustness evaluation and health-trend analysis. |
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Lease-based shard scheduling and recovery](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup. | [Implementation and running](https://github.com/kimzclandi/LeaseBasedShardScheduling#readme) |
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go tool authorization, parameter-bound approvals and audit; co-authored, single-instance prototype. | [Architecture](https://github.com/kimzclandi/AgentGate/blob/main/docs/ARCHITECTURE.md) · [Tests and limits](https://github.com/kimzclandi/AgentGate/blob/main/docs/TEST_REPORT.md) |
+
+## Visual-model evaluation
+
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Object-detection data selection and training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection) | Small-sample BDD100K, ROI-head training; targeted selection did not consistently beat random. | [Training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) |
+| [VLM image-dependence evaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | Fixed SmolVLM, 90 questions × three visual interventions; inference evaluation without training gains. | [Run](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [Intervention results](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md) |
+
+## Robotics and industrial diagnosis
+
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Course project: potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation using an upstream PPO implementation. | [Online interpretation (Chinese)](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/interpretation_zh.md) · [Full-archive reproduction](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
+| [Bearing fault diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) | Collaborative project: CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction. | [Experiment report](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [Saved-evidence verification](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
 
 ## Contributions and reproduction
 

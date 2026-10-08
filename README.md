@@ -44,16 +44,26 @@ CPU 热路径剪枝、Cache 实验与 Attention 数值检查，使用原生框�
 
 [运行](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [检索结果与代价](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md) · [查询优化](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/BM25_EXACT_OPTIMIZATION.md) · [恢复与一致性](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/EVIDENCE_MAP.md)
 
-## 其他方向
+## 系统与 Agent 工程
 
-| 项目 | 问题与范围 |
-|---|---|
-| [租约式分片调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing、幂等提交；单机多进程，未证明多 worker 加速。 |
-| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具授权、参数绑定审批与审计；共同作者项目、单实例原型。 |
-| [目标检测数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | BDD100K 小样本、ROI 头训练；定向选样未稳定优于随机。 |
-| [视觉语言模型图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 固定 SmolVLM、90 题 × 三种视觉输入干预；推理评测，无训练收益。 |
-| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 共享跟踪器下的势场与 PPO 对照、500 回合仿真评估。 |
-| [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 振动特征、稳健性评测与健康趋势分析。 |
+| 项目 | 问题与范围 | 直接核验 |
+|---|---|---|
+| [租约式分片调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing、幂等提交；单机多进程，未证明多 worker 加速。 | [实现与运行](https://github.com/kimzclandi/LeaseBasedShardScheduling#readme) |
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具授权、参数绑定审批与审计；共同作者项目、单实例原型。 | [架构](https://github.com/kimzclandi/AgentGate/blob/main/docs/ARCHITECTURE.md) · [测试与限制](https://github.com/kimzclandi/AgentGate/blob/main/docs/TEST_REPORT.md) |
+
+## 视觉模型评测
+
+| 项目 | 问题与范围 | 直接核验 |
+|---|---|---|
+| [目标检测数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | BDD100K 小样本、ROI 头训练；定向选样未稳定优于随机。 | [训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) |
+| [视觉语言模型图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 固定 SmolVLM、90 题 × 三种视觉输入干预；推理评测，无训练收益。 | [运行](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [干预结果](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md) |
+
+## 机器人与工业诊断
+
+| 项目 | 问题与范围 | 直接核验 |
+|---|---|---|
+| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 课程项目：共享跟踪器下的势场与 PPO 对照、500 回合仿真评估；PPO 复用上游实现。 | [在线解读](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/interpretation_zh.md) · [完整包复现说明](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
+| [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 合作项目：CWRU 振动特征、稳健性评测与健康趋势分析；不作为剩余寿命预测。 | [实验报告](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [保存证据复核](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
 
 ## 贡献与复现
 
