@@ -17,6 +17,7 @@ DOCS = [
     "CODE_OF_CONDUCT.md",
     "docs/MAINTAINING.md",
     "docs/NAMING.md",
+    "docs/PROJECT_STATUS.md",
     ".github/PULL_REQUEST_TEMPLATE.md",
 ]
 

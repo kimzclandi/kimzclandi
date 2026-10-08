@@ -1,73 +1,80 @@
-# kimzclandi｜数据工程与模型实验
+# kimzclandi｜模型推理、压缩与数据工程
 
 **简体中文** | [English](README.en.md)
 
-![Project wordmark](.github/project-header.svg)
+![模型推理、压缩与数据工程](.github/project-header.svg)
 
-[![CI](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
-[![Stars](https://img.shields.io/github/stars/kimzclandi/kimzclandi?style=flat)](https://github.com/kimzclandi/kimzclandi/stargazers) [License status](#license)
+[![Navigation](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
 
-围绕数据加工与质量、工程可靠性、视觉模型评测及评测驱动的数据迭代开展实验。以下仓库提供可运行代码、逐条结果与复现说明；代码、测试和文档使用 AI 辅助开发，具体贡献与上游归属见各项目。
+围绕小模型蒸馏与量化、Cache / Attention、性能分析和可复现数据流水线开展实验。各项目保留实现、固定配置、原始记录与失败分析，分别说明工程检查、模型质量与性能结论。
 
-[项目状态与最小运行方式](docs/PROJECT_STATUS.md) · [全部公开仓库](https://github.com/kimzclandi?tab=repositories)
+[项目状态与核验入口](docs/PROJECT_STATUS.md) · [名称与兼容性](docs/NAMING.md) · [公开仓库](https://github.com/kimzclandi?tab=repositories)
 
-## 主要项目
+## 核心项目
 
-### 1. 中文文本数据处理与检索评测 · 可追溯的中文数据加工
+### 01 · 大模型推理优化与性能分析
 
-将公开中文文段转为可检查的数据资产：质量算子、Ray 任务、内容寻址缓存、原子快照与 SQLite 血缘，并用检索失败分析比较切块方法。保存了串行/Ray 一致性、故障恢复和逐题检索结果；重叠切块改善证据覆盖，同时增加索引与查询成本。当前为单机小语料实验，没有 Ray 加速证据。
+[inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab) · Python / ONNX Runtime / MLX / Metal
 
-[项目](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · [运行](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [结果](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md)
+CPU 热路径剪枝、Cache 实验与 Attention 数值检查，使用原生框架控制组分析优化空间。固定 M4 Max CPU 负载下，包含排序与拒答的热请求计算由 **68.681 → 55.342 ms**；`load_service` 初始化由 **17.919 → 5.139 s**，后者不含进程启动和请求推理。
 
-### 2. 面向目标检测的数据选择与训练对照 · 固定预算下的检测数据选择
+保留负结果：Metal residual-add + RMSNorm 相对编译原生路径慢约 **23.8%**；真实 Qwen 原生 Cache 容量预留未通过加速门槛。Mac 记录不代表 CUDA / Ascend 实测或生产服务收益。
 
-在 BDD100K 小样本上比较随机与定向选样，仅微调预训练检测器的 ROI 预测头。提供三种子、匹配训练步数的对照、失败切片及排序机制诊断；当前未证明定向选择稳定优于随机。Ray 扩展仅在单机验证。
+[热路径实现与记录](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-pruning.md) · [初始化](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-startup.md) · [Attention](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/attention-backend-study.md) · [原生 Cache 对照](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qwen-cache-reservation.md) · [Metal 负结果](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/metal-residual-rmsnorm.md)
 
-[项目与运行](https://github.com/kimzclandi/ObjectDetectionDataSelection) · [训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) · [机制诊断](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/DIAGNOSIS_V3_REPORT.md)
+### 02 · 小模型蒸馏与量化评测
 
-### 3. 视觉语言模型的图像依赖性评测 · 视觉输入干预与失败分析
+[SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · PyTorch / LoRA / 完整词表 KL / MLX
 
-固定 SmolVLM，对合成场景执行原图、空白图和错配图干预，保存 90 题 × 三种输入、共 270 次真实生成与配对切片结果。观察到的视觉贡献主要来自空间题；这是推理评测，没有模型训练收益。历史 metadata 规则演示与真实推理分开记录。
+固定 Qwen 教师与学生，构建回答 token 的完整词表 logits 缓存、CE + 温度 KL 训练及匹配 gold-SFT 控制组。v2 使用 **242 条 TRAIN、3 seeds × 242 步**；74 题 dev 归一化 EM 为 **60.36% ± 2.81%**，低于 gold-SFT 的 **64.86% ± 1.35%**，未证明 soft targets 带来质量优势（3 seeds 均值 ± 样本标准差）。
 
-[项目](https://github.com/kimzclandi/VLMImageDependenceEvaluation) · [运行](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [干预结果](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md)
+量化记录分别报告权重体积、推理耗时和逐题质量；保留 Q4 质量失败、历史响应蒸馏及外部评估。dev 已复用，不能当作独立质量确认。模型与量化基础能力来自上游框架。
 
-### 4. 小语言模型问答微调与量化实验 · 数据覆盖、训练与量化对照
+[训练与数据协议](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/LOGITS_DISTILLATION_V2.md) · [逐题结果与控制组](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/logits-distillation-v2/RESULTS.md) · [代码与证据索引](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EVIDENCE_MAP.md) · [贡献边界](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/CONTRIBUTIONS.md)
 
-围绕小模型抽取式问答，记录 LoRA、响应蒸馏、数据覆盖与同框架量化。新增参考标签质量对照完成9次训练：同题修正目标在96题留出集上将平均严格EM从17.36%提高到24.31%，差值区间为[+1.04,+13.54]个百分点；使用了参考标签，不是无标注筛选收益。新增DRCD外部96题评测中，两组平均EM均为57.29%，差值区间[-5.21,+4.86]个百分点，未复现上述正向主比较。自动核验器失败、历史训练候选未通过采用门槛，以及Q8的限定质量保持结果均保留；未作业务部署验证。
+## 辅助项目
 
-[项目](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · [运行](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [质量对照与限制](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/quality-study-20260920/RESULTS.md) · [外部评测](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EXTERNAL_DRCD.md)
+### 03 · 中文数据处理与检索
 
-## 工程可靠性
+[ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · Ray / SQLite / BM25
 
-| 项目 | 独立问题与验证边界 |
+对 **2,403 篇文段、10,142 个候选问题**实施质量检查、不可变快照、血缘与失败恢复。重叠切块将留出集 span-hit@3 从 **81.25% → 89.38%**，同时文档 recall@3 从 **95.625% → 95.00%**、块数增加 **40.14%**、查询中位耗时由 **7.50 → 12.04 ms**。当前规模 Ray 慢于 serial。
+
+后续 PreparedBM25 在固定同次对照中约 **1.86–1.87×**，640 个 query-index 对、1,920 个分数精确一致；额外索引状态为 O(V+N)。这项查询优化与上述切块质量实验分开记录。
+
+[运行](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [检索结果与代价](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md) · [查询优化](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/BM25_EXACT_OPTIMIZATION.md) · [恢复与一致性](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/EVIDENCE_MAP.md)
+
+## 其他方向
+
+| 项目 | 问题与范围 |
 |---|---|
-| [基于租约的分片任务调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing token、幂等提交与主动故障实验；单机多进程，不代表多机生产系统或任务只执行一次。 |
+| [租约式分片调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing、幂等提交；单机多进程，未证明多 worker 加速。 |
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go 工具授权、参数绑定审批与审计；共同作者项目、单实例原型。 |
+| [目标检测数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | BDD100K 小样本、ROI 头训练；定向选样未稳定优于随机。 |
+| [视觉语言模型图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 固定 SmolVLM、90 题 × 三种视觉输入干预；推理评测，无训练收益。 |
+| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 共享跟踪器下的势场与 PPO 对照、500 回合仿真评估。 |
+| [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 振动特征、稳健性评测与健康趋势分析。 |
 
-完整指标、负结果、数据许可与适用范围保留在各仓库。CI 的离线证据检查、实际推理与模型训练按项目分别说明。
+## 贡献与复现
 
-[全部公开仓库](https://github.com/kimzclandi?tab=repositories)
+代码、测试与文档使用 AI 辅助开发；各仓库分别说明个人实现、共同作者和上游框架归属。AI 辅助实现、框架提供的 kernel 与自主算法贡献分别标注。
 
-## 维护与本地检查
+主页只索引公开项目的默认分支材料。开发分支和未合并 PR 不作为已发布结果；实验原始失败与历史结论保留在对应仓库。CI 验证范围由工作流决定，绿色检查不表示模型质量、GPU 性能或业务部署通过。
 
-本仓库维护个人主页和项目导航，无需安装模型或业务服务。Python 3.10+：
+本仓库仅维护导航。Python 3.10+，无需模型：
 
 ```sh
 git clone https://github.com/kimzclandi/kimzclandi.git
 cd kimzclandi
 python3 -m unittest discover -s tests -v
+python3 .github/scripts/check_docs.py
 python3 scripts/verify_navigation.py
 ```
 
-导航检查需要网络，会读取关联仓库的公开页面。
+最后一项需网络，匿名读取公开仓库的默认分支 README 和链接文档；不会运行模型实验。
 
-## Contributing / 参与贡献
-
-[贡献指南](CONTRIBUTING.md) · [行为准则](CODE_OF_CONDUCT.md) · [结构与维护](docs/MAINTAINING.md)
-
-[反馈问题](https://github.com/kimzclandi/kimzclandi/issues/new?template=bug_report.yml) · [建议功能](https://github.com/kimzclandi/kimzclandi/issues/new?template=feature_request.yml)
+[贡献指南](CONTRIBUTING.md) · [行为准则](CODE_OF_CONDUCT.md) · [维护说明](docs/MAINTAINING.md)
 
 ## License
 
-本主页仓库尚未指定许可证。各链接项目的代码、数据和模型许可请以对应仓库为准。
-
-[项目名称与兼容性说明 / Naming and compatibility](docs/NAMING.md)
+本主页仓库尚未指定许可证。各项目代码、数据和模型许可请以对应仓库为准。

@@ -2,13 +2,15 @@
 
 本仓库与用户名同名，根目录 README 显示在个人主页；它只做导航，不计为技术项目。
 
-主要项目依次为 ChineseTextProcessingAndRetrieval、ObjectDetectionDataSelection、VLMImageDependenceEvaluation、SmallModelQAFinetuningAndQuantization，分别对应数据资产与可靠性、检测数据选择、视觉输入评测、训练与量化对照。LeaseBasedShardScheduling 为可靠性工程补充。更新介绍时保留仓库名称、URL 与 Git 历史。
+主要项目依次为 inference-compression-lab、SmallModelQAFinetuningAndQuantization、ChineseTextProcessingAndRetrieval，分别对应推理与性能分析、蒸馏量化、数据工程。其他公开项目按系统、Agent、视觉与机器人方向简要索引。显示名称统一见 [NAMING.md](NAMING.md)，保留规范仓库 URL 与 Git 历史。
+
+主页只链接公开默认分支证据。先确认当前 default branch 和 HEAD；不能假设所有仓库使用 main，也不能把未合并 PR 的指标写入已发布摘要。私有仓库不进入公开目录。README.md 与 README.en.md 的结果、边界、链接和命令同步维护。
 
 每个条目简要说明研究问题、实际实现、当前结果、运行入口与关键限制。指标旁写明数据范围和分母；历史规则、真实推理、预测缓存回放与训练分开说明。先核对对应仓库当前报告再更新主页，不能用旧摘要代替当前事实。
 
 保留真实的 AI 辅助说明与共同作者归属。方法说明和实现索引通过技术文档组织；明确区分已验证结果、设计建议和后续计划。
 
-发布前运行 `python scripts/verify_navigation.py`，检查匿名文档访问。推送后检查该提交的 Actions；徽标代替手写测试总数。不要加入本机路径、私人资料或密钥。
+发布前运行 `python scripts/verify_navigation.py`，检查双语 README 与 docs 的本地文件链接和匿名文档访问。仓库根链接通过 raw HEAD 检查默认分支，blob 链接保留其 ref（含斜杠分支名）与文件路径；这不验证远端标题锚点或模型结论。推送后检查该提交的 Actions；徽标代替手写测试总数。不要加入本机路径、私人资料或密钥。
 
 
 ## Structure
