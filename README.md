@@ -62,7 +62,7 @@ CPU 热路径剪枝、Cache 实验与 Attention 数值检查，使用原生框�
 
 | 项目 | 问题与范围 | 直接核验 |
 |---|---|---|
-| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 仿真项目：共享跟踪器下的势场与 PPO 对照、500 回合仿真评估；PPO 复用上游实现。 | [在线解读](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/interpretation_zh.md) · [完整包复现说明](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
+| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 仿真项目：共享跟踪器下的势场与 PPO 对照、500 回合仿真评估；PPO 复用上游实现。 | [在线解读](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/final_20261009/interpretation_zh.md) · [完整包复现说明](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
 | [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 合作项目：CWRU 振动特征、稳健性评测与健康趋势分析；不作为剩余寿命预测。 | [实验报告](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [保存证据复核](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
 
 ## 贡献与复现
