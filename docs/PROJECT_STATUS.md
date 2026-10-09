@@ -1,14 +1,19 @@
-# 项目状态与运行方式
+# 项目状态与核验入口
 
-这份索引按已验证的工作范围组织项目。实验负结果保留在结果报告中；CI绿色表示对应检查通过，不表示业务部署或模型收益。
+本索引只使用公开默认分支材料。离线回算、数据流水线重跑、模型推理、训练与性能重测是不同操作；绿色 CI 只表示对应检查通过。运行前按链接仓库 README 准备环境，不把保存证据复核称为新实验。
 
-| 项目 | 定位与已完成部分 | 当前边界 | 最小核验入口 |
+| 项目 | 已实现内容 | 当前边界 | 核验入口 |
 |---|---|---|---|
-| [中文文本数据处理与检索评测](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) | 数据工程主项目；不可变资产、血缘、恢复和证据检索 | 单机；覆盖改善伴随索引/查询成本，无Ray加速证据 | README中的portable重建与排名核验 |
-| [小语言模型问答微调与量化实验](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) | 模型实验主项目；训练、数据质量对照、量化与冻结评估 | 使用参考标签；CMRC正向主比较未在DRCD外部96题复现；无业务部署 | `scripts/verify_quality_release.py`与`scripts/verify_external_drcd.py`；完整训练入口已同机重跑 |
-| [基于租约的分片任务调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | 可靠性工程补充；租约、fencing、幂等提交及主动故障 | 单机多进程；不是任务只执行一次 | 标准库测试、`scripts/verify_evidence.py` |
-| [面向目标检测的数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | 视觉训练实验；固定预算、多seed与失败切片 | 小样本、仅ROI预测头；定向未稳定优于随机 | `scripts/verify_artifacts.py`；模型重跑另需数据 |
-| [视觉语言模型的图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 视觉推理实验；合成图像三种干预与逐条预测 | 固定模型、无训练；未验证真实相机/机器人 | `scripts/verify_grounding.py` |
-| [Profile](https://github.com/kimzclandi/kimzclandi) | 跨项目导航、贡献与验证边界索引 | 不承载独立模型实验 | `python scripts/verify_navigation.py` |
+| [大模型推理优化与性能分析](https://github.com/kimzclandi/inference-compression-lab) | CPU 热路径、Cache、Attention 数值检查、Metal 实验与原始失败 | Metal 慢于原生；原生 Cache 预留未达加速门槛；无 CUDA / Ascend 实测 | README 安装与离线验证命令；`experiments.verify_qa_risk_pruning`、`experiments.verify_qa_risk_startup`；真实运行另需匹配硬件和模型 |
+| [小模型蒸馏与量化评测](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) | 完整词表 logits 蒸馏、匹配 gold-SFT、缓存/模型身份预检、MLX 量化 | v2 dev 低于 gold-SFT；复用 dev 不构成独立确认；Q4 质量失败 | `scripts/acceptance.py` 运行测试和离线证据验证，不下载模型、不训练或重新推理 |
+| [中文数据处理与检索](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) | 不可变资产、血缘、Ray 恢复、BM25 与逐题证据 | span 收益伴随召回退化和成本；当前规模 Ray 更慢 | `scripts/verify.py`、`scripts/verify_portable.py`；`scripts/reproduce_portable.py` 在新目录重建 |
+| [租约式分片调度与故障恢复](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite 租约、fencing、幂等提交与故障实验 | 单机多进程；无多 worker 加速证据，不是任务只执行一次 | 标准库测试与 `scripts/verify_evidence.py` |
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | 工具授权、参数绑定审批与 SQLite 审计 | 共同作者、单实例原型 | README 中 Go 测试与演示入口 |
+| [目标检测数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | 固定预算、多 seed、ROI 头训练与失败切片 | 小样本；定向选择未稳定优于随机 | `scripts/verify_artifacts.py`；模型重跑另需数据 |
+| [视觉语言模型图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 合成图像三种干预与逐条预测 | 固定模型推理，无训练收益 | `scripts/verify_grounding.py` |
+| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 仿真项目：共享跟踪器下的势场/PPO 控制及仿真 | PPO 复用上游实现，仅仿真验证 | README 在线报告；冻结模型和原始实验仅在 v1.0.0 完整 ZIP，按 `docs/reproduction.md` 搬迁 |
+| [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 合作项目：CWRU 振动特征、稳健性与健康趋势 | 未证明物理特征优于基础 RF；不是剩余寿命预测 | `outputs/full-verified/reports/experiment.md`、`verification.json`，训练为另一步骤 |
 
-各入口均须按对应仓库README准备环境。离线重算、重新执行数据流水线、真实模型推理和重新训练分别标注；不把查看已保存结果算作重新运行实验。
+## Publication boundary
+
+Linked default branches contain the summarized evidence. Unmerged pull requests are separate development work. This index does not claim independent quality confirmation, production service readiness, target-device acceleration, or personal mastery from passing CI.

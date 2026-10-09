@@ -1,73 +1,90 @@
-# kimzclandi · Data Engineering and Model Experiments
+# kimzclandi
 
 [简体中文](README.md) | **English**
 
-![Project wordmark](.github/project-header.svg)
+![Model inference, compression and data engineering](.github/project-header.svg)
 
-[![CI](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
-[![Stars](https://img.shields.io/github/stars/kimzclandi/kimzclandi?style=flat)](https://github.com/kimzclandi/kimzclandi/stargazers) [License status](#license)
+[![Navigation](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
 
-Experiments in data processing and quality, engineering reliability, visual-model evaluation and evaluation-driven data iteration. These repositories provide runnable code, per-example results and reproduction instructions. Code, tests and documentation use AI-assisted development; each project documents contributions and upstream attribution.
+Experiments in small-model distillation and quantization, Cache / Attention, performance analysis and reproducible data pipelines. Projects retain implementations, fixed configurations, raw records and failure analysis, distinguishing engineering checks from model-quality and performance conclusions.
 
-[Project status and minimal runs](docs/PROJECT_STATUS.md) · [All public repositories](https://github.com/kimzclandi?tab=repositories)
+[Project status and verification](docs/PROJECT_STATUS.md) · [Naming and compatibility](docs/NAMING.md) · [Public repositories](https://github.com/kimzclandi?tab=repositories)
 
-## Main projects
+## Core projects
 
-### 1. Chinese text processing and retrieval evaluation
+### 01 · Model inference optimization and performance analysis
 
-Turn public Chinese passages into inspectable data assets using quality operators, Ray tasks, content-addressed caching, atomic snapshots and SQLite lineage. Retrieval failures guide chunking comparisons. Saved evidence covers serial/Ray equivalence, recovery and per-question retrieval. Overlap improves evidence coverage while increasing index size and query cost. This is a small single-machine corpus experiment, with no demonstrated Ray speedup.
+[inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab) · Python / ONNX Runtime / MLX / Metal
 
-[Project](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · [Run](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [Results](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md)
+CPU hot-path pruning, Cache experiments and Attention numerical checks, including native-framework controls. Under a fixed M4 Max CPU workload, hot-request computation including ranking and abstention decreased from **68.681 to 55.342 ms**; `load_service` initialization decreased from **17.919 to 5.139 s**, excluding process startup and request inference.
 
-### 2. Data selection and controlled training for object detection
+Negative results remain visible: Metal residual-add + RMSNorm was approximately **23.8% slower** than the compiled native path; real-Qwen native Cache reservation failed its speed gate. Mac records do not establish CUDA / Ascend measurements or production-service gains.
 
-Compare random and targeted selection on a small BDD100K sample, finetuning only a pretrained detector's ROI predictor head. Includes three-seed, matched-step controls, failure slices and ranking-mechanism diagnostics. A stable advantage of targeted selection over random has not been demonstrated. Ray extensions are verified only on one machine.
+[Hot path and records](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-pruning.md) · [Initialization](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-startup.md) · [Attention](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/attention-backend-study.md) · [Native Cache control](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qwen-cache-reservation.md) · [Metal negative result](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/metal-residual-rmsnorm.md)
 
-[Project and running](https://github.com/kimzclandi/ObjectDetectionDataSelection) · [Training comparison](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) · [Mechanism diagnostics](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/DIAGNOSIS_V3_REPORT.md)
+### 02 · Small-model distillation and quantization evaluation
 
-### 3. Visual-input dependence in a vision-language model
+[SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · PyTorch / LoRA / Full-vocabulary KL / MLX
 
-With fixed SmolVLM, compare original, blank and mismatched images on synthetic scenes. Records contain 90 questions × three conditions, or 270 actual generations, with paired slices. Observed visual contribution mainly comes from spatial questions. This is inference evaluation, not a training gain. Historical metadata-rule demonstrations are recorded separately from actual inference.
+Fixed Qwen teacher/student identities, full-vocabulary logits caches for answer tokens, CE + temperature-scaled KL training and matched gold-SFT controls. v2 used **242 TRAIN examples, 3 seeds × 242 steps**. Normalized EM on 74 dev questions was **60.36% ± 2.81%**, below gold-SFT at **64.86% ± 1.35%**; this does not show a quality advantage from soft targets (mean ± sample standard deviation over 3 seeds).
 
-[Project](https://github.com/kimzclandi/VLMImageDependenceEvaluation) · [Run](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [Intervention results](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md)
+Quantization records separately report weight size, inference timing and per-question quality, retaining Q4 quality failures, historical response distillation and external evaluation. The reused dev set is not independent quality confirmation. Base model and quantization capabilities come from upstream frameworks.
 
-### 4. Small-model QA finetuning and quantization
+[Training and data protocol](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/LOGITS_DISTILLATION_V2.md) · [Per-question results and controls](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/logits-distillation-v2/RESULTS.md) · [Code and evidence map](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EVIDENCE_MAP.md) · [Contributions](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/CONTRIBUTIONS.md)
 
-Extractive-QA studies covering LoRA, response distillation, data coverage and same-framework quantization. Nine new reference-label quality-control runs raised mean strict EM on a 96-question holdout from 17.36% to 24.31% by correcting targets for the same questions; the difference interval is [+1.04,+13.54] points. Reference labels were used, so this is not an unlabeled-filtering gain. On a new 96-question DRCD external evaluation, both groups achieved mean EM of 57.29%, with difference interval [-5.21,+4.86] points; the positive primary comparison did not replicate. Automatic-verifier failures, historical candidates failing adoption gates and bounded Q8 quality-preservation results remain documented. No business deployment validation.
+## Supporting project
 
-[Project](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · [Run](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/QUALITY_STUDY_RELEASE.md) · [Quality comparison and limits](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/quality-study-20260920/RESULTS.md) · [External evaluation](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EXTERNAL_DRCD.md)
+### 03 · Chinese Data Processing and Retrieval
 
-## Engineering reliability
+[ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · Ray / SQLite / BM25
 
-| Project | Problem and verified scope |
-|---|---|
-| [Lease-based shard scheduling and recovery](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite leases, fencing tokens, idempotent commits and injected failures; single-machine multi-process behavior, not multi-machine production operation or exactly-once execution. |
+Quality checks, immutable snapshots, lineage and recovery over **2,403 passages and 10,142 candidate questions**. Overlapping chunks raised held-out span-hit@3 from **81.25% to 89.38%**, while document recall@3 fell from **95.625% to 95.00%**, chunk count grew **40.14%**, and median query time rose from **7.50 to 12.04 ms**. Ray was slower than serial at this scale.
 
-Full metrics, negative results, data licensing and scope remain in each repository. Offline CI evidence checks, actual inference and model training are distinguished per project. Linked technical documents retain their original language.
+A later fixed, same-run PreparedBM25 comparison measured approximately **1.86–1.87×**, preserving exact results for 640 query-index pairs and 1,920 scores with O(V+N) additional index state. Query optimization and the earlier chunking-quality experiment remain separate studies.
 
-[All public repositories](https://github.com/kimzclandi?tab=repositories)
+[Run](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [Retrieval results and costs](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md) · [Query optimization](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/BM25_EXACT_OPTIMIZATION.md) · [Recovery and parity](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/EVIDENCE_MAP.md)
 
-## Maintenance and local checks
+## Systems and agent engineering
 
-This repository maintains a profile and project navigation. No model or business-service installation is needed. Python 3.10+:
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Lease-based shard scheduling and recovery](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup. | [Implementation and running](https://github.com/kimzclandi/LeaseBasedShardScheduling#readme) |
+| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go tool authorization, parameter-bound approvals and audit; co-authored, single-instance prototype. | [Architecture](https://github.com/kimzclandi/AgentGate/blob/main/docs/ARCHITECTURE.md) · [Tests and limits](https://github.com/kimzclandi/AgentGate/blob/main/docs/TEST_REPORT.md) |
+
+## Visual-model evaluation
+
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Object-detection data selection and training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection) | Small-sample BDD100K, ROI-head training; targeted selection did not consistently beat random. | [Training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) |
+| [VLM image-dependence evaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | Fixed SmolVLM, 90 questions × three visual interventions; inference evaluation without training gains. | [Run](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [Intervention results](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md) |
+
+## Robotics and industrial diagnosis
+
+| Project | Question and scope | Verify directly |
+|---|---|---|
+| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Simulation project: potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation using an upstream PPO implementation. | [Online interpretation (Chinese)](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/final_20261009/interpretation_zh.md) · [Full-archive reproduction](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
+| [Bearing fault diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) | Collaborative project: CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction. | [Experiment report](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [Saved-evidence verification](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
+
+## Contributions and reproduction
+
+Code, tests and documentation are developed with AI assistance. Individual repositories distinguish personal implementations, co-authorship and upstream framework attribution. AI-assisted implementation, framework kernels and original algorithmic contributions are separate claims.
+
+This profile indexes default-branch material from public projects. Development branches and unmerged PRs are not presented as published results. Original failures and historical conclusions remain in their project repositories. A green CI badge covers only its workflow checks, not model quality, GPU performance or production deployment.
+
+This repository maintains navigation only. Python 3.10+, no models required:
 
 ```sh
 git clone https://github.com/kimzclandi/kimzclandi.git
 cd kimzclandi
 python3 -m unittest discover -s tests -v
+python3 .github/scripts/check_docs.py
 python3 scripts/verify_navigation.py
 ```
 
-Navigation verification requires network access and reads the linked repositories' public pages.
+The final command needs network access and reads public default-branch READMEs and linked documents anonymously; it does not run model experiments.
 
-## Contributing
-
-[Guide](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Structure/maintenance](docs/MAINTAINING.md)
-
-[Report an issue](https://github.com/kimzclandi/kimzclandi/issues/new?template=bug_report.yml) · [Suggest a feature](https://github.com/kimzclandi/kimzclandi/issues/new?template=feature_request.yml)
+[Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Maintenance](docs/MAINTAINING.md)
 
 ## License
 
-This profile repository has no designated license. Consult each linked project for its code, data and model licenses.
-
-[Naming and compatibility](docs/NAMING.md)
+This profile repository has no specified license. Consult each linked repository for code, data and model terms.
