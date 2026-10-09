@@ -11,7 +11,7 @@
 | [AgentGate](https://github.com/kimzclandi/AgentGate) | 工具授权、参数绑定审批与 SQLite 审计 | 共同作者、单实例原型 | README 中 Go 测试与演示入口 |
 | [目标检测数据选择与训练对照](https://github.com/kimzclandi/ObjectDetectionDataSelection) | 固定预算、多 seed、ROI 头训练与失败切片 | 小样本；定向选择未稳定优于随机 | `scripts/verify_artifacts.py`；模型重跑另需数据 |
 | [视觉语言模型图像依赖性评测](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | 合成图像三种干预与逐条预测 | 固定模型推理，无训练收益 | `scripts/verify_grounding.py` |
-| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 仿真项目：共享跟踪器下的势场/PPO 控制及仿真 | PPO 复用上游实现，仅仿真验证 | README 在线报告；冻结模型和原始实验仅在 v1.0.0 完整 ZIP，按 `docs/reproduction.md` 搬迁 |
+| [Panda 避障姿态控制](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | 仿真项目：共享跟踪器下的势场/PPO 控制及仿真 | PPO 复用上游实现，仅仿真验证 | README 在线报告；冻结模型和原始实验见当前完整 Release ZIP，历史版本保留；按 `docs/reproduction.md` 搬迁 |
 | [轴承故障诊断](https://github.com/kimzclandi/bearing-fault-diagnosis) | 合作项目：CWRU 振动特征、稳健性与健康趋势 | 未证明物理特征优于基础 RF；不是剩余寿命预测 | `outputs/full-verified/reports/experiment.md`、`verification.json`，训练为另一步骤 |
 
 ## Publication boundary
