@@ -2,68 +2,36 @@
 
 [简体中文](README.md) | **English**
 
-![Model inference, compression and data engineering](.github/project-header.svg)
-
 [![Navigation](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml/badge.svg)](https://github.com/kimzclandi/kimzclandi/actions/workflows/navigation.yml)
 
 Experiments in small-model distillation and quantization, Cache / Attention, performance analysis and reproducible data pipelines. Projects retain implementations, fixed configurations, raw records and failure analysis, distinguishing engineering checks from model-quality and performance conclusions.
 
 [Project status and verification](docs/PROJECT_STATUS.md) · [Naming and compatibility](docs/NAMING.md) · [Public repositories](https://github.com/kimzclandi?tab=repositories)
 
-## Core projects
+## Public projects
 
-### 01 · Model inference optimization and performance analysis
+Listed by area, without ranking. Results, limits and reproduction commands are maintained in each repository's default branch.
 
-[inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab) · Python / ONNX Runtime / MLX / Metal
+### Inference, compression and data
 
-CPU hot-path pruning, Cache experiments and Attention numerical checks, including native-framework controls. Under a fixed M4 Max CPU workload, hot-request computation including ranking and abstention decreased from **68.681 to 55.342 ms**; `load_service` initialization decreased from **17.919 to 5.139 s**, excluding process startup and request inference.
+- [inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab): model inference optimization and performance analysis. CPU hot-path, KV Cache, Attention and Metal experiments against native-framework controls; failed speed gates are retained, and CUDA / Ascend were not measured.
+- [SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization): small-model distillation and quantization evaluation (two authors). Full-vocabulary logits distillation with Qwen teacher/student, matched gold-SFT controls and MLX quantization; distillation did not exceed gold-SFT and Q4 failed its quality gate.
+- [ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval): Chinese data processing and retrieval. Immutable snapshots, SQLite lineage, Ray recovery and BM25 retrieval controls; chunking gains come with recall and latency costs, and Ray was slower than serial at this scale.
 
-Negative results remain visible: Metal residual-add + RMSNorm was approximately **23.8% slower** than the compiled native path; real-Qwen native Cache reservation failed its speed gate. Mac records do not establish CUDA / Ascend measurements or production-service gains.
+### Systems and agents
 
-[Hot path and records](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-pruning.md) · [Initialization](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qa-risk-startup.md) · [Attention](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/attention-backend-study.md) · [Native Cache control](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/qwen-cache-reservation.md) · [Metal negative result](https://github.com/kimzclandi/inference-compression-lab/blob/codex/research-prerelease/docs/metal-residual-rmsnorm.md)
+- [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling): lease-based shard scheduling and recovery. SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup.
+- [AgentGate](https://github.com/kimzclandi/AgentGate): authorization and approval for agent tool calls (co-authored). Go implementation of parameter-bound approvals and audit; single-instance prototype.
 
-### 02 · Small-model distillation and quantization evaluation
+### Visual-model evaluation
 
-[SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) · PyTorch / LoRA / Full-vocabulary KL / MLX
+- [ObjectDetectionDataSelection](https://github.com/kimzclandi/ObjectDetectionDataSelection): object-detection data selection and training controls. Small-sample BDD100K, ROI-head training only; targeted selection did not consistently beat random.
+- [VLMImageDependenceEvaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation): VLM image-dependence evaluation. Fixed SmolVLM with original, blank and mismatched image inputs; inference-only evaluation, no training.
 
-Fixed Qwen teacher/student identities, full-vocabulary logits caches for answer tokens, CE + temperature-scaled KL training and matched gold-SFT controls. v2 used **242 TRAIN examples, 3 seeds × 242 steps**. Normalized EM on 74 dev questions was **60.36% ± 2.81%**, below gold-SFT at **64.86% ± 1.35%**; this does not show a quality advantage from soft targets (mean ± sample standard deviation over 3 seeds).
+### Robotics and industrial diagnosis
 
-Quantization records separately report weight size, inference timing and per-question quality, retaining Q4 quality failures, historical response distillation and external evaluation. The reused dev set is not independent quality confirmation. Base model and quantization capabilities come from upstream frameworks.
-
-[Training and data protocol](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/LOGITS_DISTILLATION_V2.md) · [Per-question results and controls](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/reports/logits-distillation-v2/RESULTS.md) · [Code and evidence map](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/docs/EVIDENCE_MAP.md) · [Contributions](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization/blob/main/CONTRIBUTIONS.md)
-
-## Supporting project
-
-### 03 · Chinese Data Processing and Retrieval
-
-[ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) · Ray / SQLite / BM25
-
-Quality checks, immutable snapshots, lineage and recovery over **2,403 passages and 10,142 candidate questions**. Overlapping chunks raised held-out span-hit@3 from **81.25% to 89.38%**, while document recall@3 fell from **95.625% to 95.00%**, chunk count grew **40.14%**, and median query time rose from **7.50 to 12.04 ms**. Ray was slower than serial at this scale.
-
-A later fixed, same-run PreparedBM25 comparison measured approximately **1.86–1.87×**, preserving exact results for 640 query-index pairs and 1,920 scores with O(V+N) additional index state. Query optimization and the earlier chunking-quality experiment remain separate studies.
-
-[Run](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/REPRODUCE.md) · [Retrieval results and costs](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/reports/RESULTS.md) · [Query optimization](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/BM25_EXACT_OPTIMIZATION.md) · [Recovery and parity](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval/blob/main/docs/EVIDENCE_MAP.md)
-
-## Systems and agent engineering
-
-| Project | Question and scope | Verify directly |
-|---|---|---|
-| [Lease-based shard scheduling and recovery](https://github.com/kimzclandi/LeaseBasedShardScheduling) | SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup. | [Implementation and running](https://github.com/kimzclandi/LeaseBasedShardScheduling#readme) |
-| [AgentGate](https://github.com/kimzclandi/AgentGate) | Go tool authorization, parameter-bound approvals and audit; co-authored, single-instance prototype. | [Architecture](https://github.com/kimzclandi/AgentGate/blob/main/docs/ARCHITECTURE.md) · [Tests and limits](https://github.com/kimzclandi/AgentGate/blob/main/docs/TEST_REPORT.md) |
-
-## Visual-model evaluation
-
-| Project | Question and scope | Verify directly |
-|---|---|---|
-| [Object-detection data selection and training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection) | Small-sample BDD100K, ROI-head training; targeted selection did not consistently beat random. | [Training controls](https://github.com/kimzclandi/ObjectDetectionDataSelection/blob/main/docs/FAILURE_V2_REPORT.md) |
-| [VLM image-dependence evaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) | Fixed SmolVLM, 90 questions × three visual interventions; inference evaluation without training gains. | [Run](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/RUNNING.md) · [Intervention results](https://github.com/kimzclandi/VLMImageDependenceEvaluation/blob/main/docs/GROUNDING_V3_REPORT.md) |
-
-## Robotics and industrial diagnosis
-
-| Project | Question and scope | Verify directly |
-|---|---|---|
-| [Panda obstacle-aware posture control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) | Simulation project: potential-field and PPO controls with a shared tracker; 500-episode simulation evaluation using an upstream PPO implementation. | [Online interpretation (Chinese)](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/deliverables/final_20261009/interpretation_zh.md) · [Full-archive reproduction](https://github.com/kimzclandi/panda-obstacle-aware-posture-control/blob/main/docs/reproduction.md) |
-| [Bearing fault diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) | Collaborative project: CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction. | [Experiment report](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/experiment.md) · [Saved-evidence verification](https://github.com/kimzclandi/bearing-fault-diagnosis/blob/main/outputs/full-verified/reports/verification.json) |
+- [panda-obstacle-aware-posture-control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control): Panda obstacle-aware posture control. Simulated comparison of potential-field and PPO controls with a shared tracker; PPO reuses an upstream implementation and results are simulation-only.
+- [bearing-fault-diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis): bearing fault diagnosis (collaborative). CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction.
 
 ## Contributions and reproduction
 

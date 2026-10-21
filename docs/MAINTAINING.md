@@ -2,11 +2,11 @@
 
 本仓库与用户名同名，根目录 README 显示在个人主页；它只做导航，不计为技术项目。
 
-主要项目依次为 inference-compression-lab、SmallModelQAFinetuningAndQuantization、ChineseTextProcessingAndRetrieval，分别对应推理与性能分析、蒸馏量化、数据工程。其他公开项目按系统、Agent、视觉与机器人方向简要索引。显示名称统一见 [NAMING.md](NAMING.md)，保留规范仓库 URL 与 Git 历史。
+README 按方向平铺列出全部公开项目，不排序、不区分主次。显示名称统一见 [NAMING.md](NAMING.md)，保留规范仓库 URL 与 Git 历史。
 
 主页只链接公开默认分支证据。先确认当前 default branch 和 HEAD；不能假设所有仓库使用 main，也不能把未合并 PR 的指标写入已发布摘要。私有仓库不进入公开目录。README.md 与 README.en.md 的结果、边界、链接和命令同步维护。
 
-每个条目简要说明研究问题、实际实现、当前结果、运行入口与关键限制。指标旁写明数据范围和分母；历史规则、真实推理、预测缓存回放与训练分开说明。先核对对应仓库当前报告再更新主页，不能用旧摘要代替当前事实。
+每个条目用一句话说明研究问题、实现范围与关键限制；具体指标、分母和运行入口留在对应仓库。先核对对应仓库当前报告再更新主页，不能用旧摘要代替当前事实。
 
 保留真实的 AI 辅助说明与共同作者归属。方法说明和实现索引通过技术文档组织；明确区分已验证结果、设计建议和后续计划。
 
@@ -19,7 +19,7 @@ Stack: **GitHub profile / Python navigation checks**. Main paths: `README.md, do
 
 This is a profile/navigation repository, not an installable library. Keep project evidence in the linked project repositories.
 
-- `.github/`: issue forms, PR template, project wordmark and Actions workflows.
+- `.github/`: issue forms, PR template and Actions workflows.
 - `CONTRIBUTING.md`: contributor setup and relevant local checks.
 - `docs/`: explanations and maintenance guidance; historical reports retain their original scope.
 - Temporary outputs and environments belong in ignored directories, never in published evidence.
