@@ -16,4 +16,4 @@
 
 ## Publication boundary
 
-Linked default branches contain the summarized evidence. Unmerged pull requests are separate development work. This index does not claim independent quality confirmation, production service readiness, target-device acceleration, or personal mastery from passing CI.
+Linked default branches contain the summarized evidence. Unmerged pull requests are separate development work. This index does not claim independent quality confirmation, production service readiness, or target-device acceleration from passing CI.
