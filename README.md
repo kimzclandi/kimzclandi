@@ -20,7 +20,6 @@
 
 ### 系统与 Agent
 
-- [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling)：租约式分片调度与故障恢复。SQLite 租约、fencing、幂等提交；单机多进程，没有多 worker 加速证据。
 - [AgentGate](https://github.com/kimzclandi/AgentGate)：Agent 工具调用的授权与审批（共同作者）。Go 实现参数绑定审批与审计，单实例原型。
 
 ### 视觉模型评测
@@ -28,10 +27,13 @@
 - [ObjectDetectionDataSelection](https://github.com/kimzclandi/ObjectDetectionDataSelection)：目标检测数据选择与训练对照。BDD100K 小样本、仅训练 ROI 头；定向选样未稳定优于随机。
 - [VLMImageDependenceEvaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation)：视觉语言模型图像依赖性评测。固定 SmolVLM，原图／空白／错配三种输入干预；只做推理评测，没有训练。
 
-### 机器人与工业诊断
+## 未公开项目
 
-- [panda-obstacle-aware-posture-control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control)：Panda 避障姿态控制。仿真中比较共享跟踪器下的势场与 PPO；PPO 复用上游实现，仅做仿真验证。
-- [bearing-fault-diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis)：轴承故障诊断（合作项目）。CWRU 振动特征、稳健性评测与健康趋势分析；不做剩余寿命预测。
+以下仓库目前不公开，只列出名称与研究范围。
+
+- **LeaseBasedShardScheduling**：租约式分片调度与故障恢复。SQLite 租约、fencing、幂等提交；单机多进程，没有多 worker 加速证据。
+- **panda-obstacle-aware-posture-control**：Panda 避障姿态控制。仿真中比较共享跟踪器下的势场与 PPO；PPO 复用上游实现，仅做仿真验证。
+- **bearing-fault-diagnosis**：轴承故障诊断（合作项目）。CWRU 振动特征、稳健性评测与健康趋势分析；不做剩余寿命预测。
 
 ## 贡献与复现
 

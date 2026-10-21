@@ -11,19 +11,19 @@
 
 Display titles describe the task; repository slugs remain stable. Use canonical URLs for maintained entry points. Historical aliases in frozen evidence and package identifiers remain unchanged.
 
-## 公开项目规范目录
+## 项目规范目录
 
 | 中文显示名 | English display name | 规范仓库 |
 |---|---|---|
 | 大模型推理优化与性能分析 | Model inference optimization and performance analysis | [inference-compression-lab](https://github.com/kimzclandi/inference-compression-lab) |
 | 小模型蒸馏与量化评测 | Small-model distillation and quantization evaluation | [SmallModelQAFinetuningAndQuantization](https://github.com/kimzclandi/SmallModelQAFinetuningAndQuantization) |
 | 中文数据处理与检索 | Chinese Data Processing and Retrieval | [ChineseTextProcessingAndRetrieval](https://github.com/kimzclandi/ChineseTextProcessingAndRetrieval) |
-| 租约式分片调度与故障恢复 | Lease-based shard scheduling and recovery | [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling) |
+| 租约式分片调度与故障恢复 | Lease-based shard scheduling and recovery | LeaseBasedShardScheduling（未公开） |
 | AgentGate | AgentGate | [AgentGate](https://github.com/kimzclandi/AgentGate) |
 | 目标检测数据选择与训练对照 | Object-detection data selection and training controls | [ObjectDetectionDataSelection](https://github.com/kimzclandi/ObjectDetectionDataSelection) |
 | 视觉语言模型图像依赖性评测 | VLM image-dependence evaluation | [VLMImageDependenceEvaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation) |
-| Panda 避障姿态控制 | Panda obstacle-aware posture control | [panda-obstacle-aware-posture-control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control) |
-| 轴承故障诊断 | Bearing fault diagnosis | [bearing-fault-diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis) |
+| Panda 避障姿态控制 | Panda obstacle-aware posture control | panda-obstacle-aware-posture-control（未公开） |
+| 轴承故障诊断 | Bearing fault diagnosis | bearing-fault-diagnosis（未公开） |
 
 主要兼容名称：`domain-qa-lab` → `SmallModelQAFinetuningAndQuantization`；`chinese-evidence-data-engine` → `ChineseTextProcessingAndRetrieval`；`ai-data-shard-lab` → `LeaseBasedShardScheduling`；`driving-data-engine` → `ObjectDetectionDataSelection`；`vlm-data-flywheel-lab` → `VLMImageDependenceEvaluation`。新材料使用规范 URL，不依赖旧链接跳转。
 

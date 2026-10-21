@@ -20,7 +20,6 @@ Listed by area, without ranking. Results, limits and reproduction commands are m
 
 ### Systems and agents
 
-- [LeaseBasedShardScheduling](https://github.com/kimzclandi/LeaseBasedShardScheduling): lease-based shard scheduling and recovery. SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup.
 - [AgentGate](https://github.com/kimzclandi/AgentGate): authorization and approval for agent tool calls (co-authored). Go implementation of parameter-bound approvals and audit; single-instance prototype.
 
 ### Visual-model evaluation
@@ -28,10 +27,13 @@ Listed by area, without ranking. Results, limits and reproduction commands are m
 - [ObjectDetectionDataSelection](https://github.com/kimzclandi/ObjectDetectionDataSelection): object-detection data selection and training controls. Small-sample BDD100K, ROI-head training only; targeted selection did not consistently beat random.
 - [VLMImageDependenceEvaluation](https://github.com/kimzclandi/VLMImageDependenceEvaluation): VLM image-dependence evaluation. Fixed SmolVLM with original, blank and mismatched image inputs; inference-only evaluation, no training.
 
-### Robotics and industrial diagnosis
+## Non-public projects
 
-- [panda-obstacle-aware-posture-control](https://github.com/kimzclandi/panda-obstacle-aware-posture-control): Panda obstacle-aware posture control. Simulated comparison of potential-field and PPO controls with a shared tracker; PPO reuses an upstream implementation and results are simulation-only.
-- [bearing-fault-diagnosis](https://github.com/kimzclandi/bearing-fault-diagnosis): bearing fault diagnosis (collaborative). CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction.
+These repositories are not public; only their names and scope are listed.
+
+- **LeaseBasedShardScheduling**: lease-based shard scheduling and recovery. SQLite leases, fencing and idempotent commits; single-machine processes, no demonstrated multi-worker speedup.
+- **panda-obstacle-aware-posture-control**: Panda obstacle-aware posture control. Simulated comparison of potential-field and PPO controls with a shared tracker; PPO reuses an upstream implementation and results are simulation-only.
+- **bearing-fault-diagnosis**: bearing fault diagnosis (collaborative). CWRU vibration features, robustness evaluation and health-trend analysis; not remaining-useful-life prediction.
 
 ## Contributions and reproduction
 
